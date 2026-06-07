@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruby Guillen NASW-CA UN Policy Advocacy Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafb;
+            color: #07192f;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: #07192f;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #33e0c4;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-item {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(51, 224, 196, 0.2);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #33e0c4;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #07192f;
+        }
+        
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffca58;
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #07192f;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #33e0c4;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #33e0c4;
+            color: #07192f;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2bc3a8;
+        }
+        
+        .btn-secondary {
+            background-color: #07192f;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #0a1f38;
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            flex: 1;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #07192f;
+            color: white;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f8fafb;
+        }
+        
+        tbody tr:hover {
+            background-color: #e6f7f5;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #d4f6f3;
+            color: #0d7377;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .footer {
+            background-color: #07192f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer a {
+            color: #33e0c4;
+            text-decoration: none;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            border-color: #33e0c4;
+            background-color: #d4f6f3;
+            color: #0d7377;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-success {
+            background-color: #d4f6f3;
+            color: #0d7377;
+            border: 1px solid #33e0c4;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #33e0c4;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">Ruby Guillen NASW-CA UN Policy Advocacy Tracker</div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-indicator"></span>
+                    <span>IGM Online</span>
+                </div>
+                <div class="status-item">
+                    <span>Active Delegates: 147</span>
+                </div>
+                <div class="status-item">
+                    <span>Pending Resolutions: 23</span>
+                </div>
+            </div>
+        </div>
+        <nav class="nav">
+            <div class="nav-item active" onclick="showSection('dashboard')">Dashboard</div>
+            <div class="nav-item" onclick="showSection('intake')">New Entry</div>
+            <div class="nav-item" onclick="showSection('contact-log')">Contact Log</div>
+            <div class="nav-item" onclick="showSection('search')">Search & Reports</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section">
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Total Delegates</div>
+                        <div class="card-value">147</div>
+                    </div>
+                    <div>Active member nations represented</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 76%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Active Resolutions</div>
+                        <div class="card-value">23</div>
+                    </div>
+                    <div>Currently under review and voting</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 62%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Submissions This Month</div>
+                        <div class="card-value">8</div>
+                    </div>
+                    <div>Multilateral policy submissions</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Vote Success Rate</div>
+                        <div class="card-value">73%</div>
+                    </div>
+                    <div>Advocacy position alignment</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 73%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Recent Activity</h2>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Delegate/Nation</th>
+                                <th>Resolution</th>
+                                <th>Vote Position</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>Ambassador Chen - China</td>
+                                <td>Social Worker Rights Framework</td>
+                                <td>For</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-14</td>
+                                <td>Dr. Martinez - Mexico</td>
+                                <td>Child Protection Standards</td>
+                                <td>For</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-13</td>
+                                <td>Minister Johnson - UK</td>
+                                <td>Mental Health Policy Initiative</td>
+                                <td>Abstain</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intake Form Section -->
+        <div id="intake" class="section hidden">
+            <div class="form-section">
+                <h2>New UN Policy Advocacy Entry</h2>
+                <form id="advocacyForm">
+                    <div class="tabs">
+                        <div class="tab active" onclick="showTab('delegate-info')">Delegate Information</div>
+                        <div class="tab" onclick="showTab('resolution-details')">Resolution Details</div>
+                        <div class="tab" onclick="showTab('voting-record')">Voting Record</div>
+                    </div>
+
+                    <div id="delegate-info" class="tab-content">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="delegateName">Delegate Name</label>
+                                <input type="text" id="delegateName" name="delegateName" placeholder="Enter delegate full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delegateTitle">Title/Position</label>
+                                <input type="text" id="delegateTitle" name="delegateTitle" placeholder="e.g., Ambassador, Minister, Representative">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberNation">Member Nation</label>
+                                <select id="memberNation" name="memberNation" required>
+                                    <option value="">Select Member Nation</option>
+                                    <option value="USA">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="China">China</option>
+                                    <option value="France">France</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="India">India</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Canada">Canada</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Contact Email</label>
+                                <input type="email" id="contactEmail" name="contactEmail" placeholder="delegate@country.gov">
+                            </div>
+                            <div class="form-group">
+                                <label for="delegateStatus">Delegate Status</label>
+                                <select id="delegateStatus" name="delegateStatus">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending Confirmation</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastContact">Last Contact Date</label>
+                                <input type="date" id="lastContact" name="lastContact">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="resolution-details" class="tab-content hidden">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="resolutionTitle">Resolution Title</label>
+                                <input type="text" id="resolutionTitle" name="resolutionTitle" placeholder="Enter resolution title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resolutionNumber">Resolution Number</label>
+                                <input type="text" id="resolutionNumber" name="resolutionNumber" placeholder="e.g., A/RES/78/123">
+                            </div>
+                            <div class="form-group">
+                                <label for="policyArea">Policy Area</label>
+                                <select id="policyArea" name="policyArea">
+                                    <option value="">Select Policy Area</option>
+                                    <option value="social-work">Social Work Practice</option>
+                                    <option value="human-rights">Human Rights</option>
+                                    <option value="child-protection">Child Protection</option>
+                                    <option value="mental-health">Mental Health</option>
+                                    <option value="education">Education & Training</option>
+                                    <option value="healthcare">Healthcare Access</option>
+                                    <option value="poverty">Poverty Reduction</option>
+                                    <option value="gender">Gender Equality</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="submissionDate">Submission Date</label>
+                                <input type="date" id="submissionDate" name="submissionDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="resolutionStatus">Resolution Status</label>
+                                <select id="resolutionStatus" name="resolutionStatus">
+                                    <option value="draft">Draft</option>
+                                    <option value="committee-review">Committee Review</option>
+                                    <option value="voting">Under Vote</option>
+                                    <option value="passed">Passed</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="withdrawn">Withdrawn</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="advocacyPosition">NASW Advocacy Position</label>
+                                <select id="advocacyPosition" name="advocacyPosition">
+                                    <option value="support">Strong Support</option>
+                                    <option value="support-amendments">Support with Amendments</option>
+                                    <option value="neutral">Neutral</option>
+                                    <option value="oppose">Oppose</option>
+                                    <option value="monitoring">Monitoring</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="resolution
